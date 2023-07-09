@@ -12,8 +12,10 @@ const Index = () => {
 
   return (
     <div className="m-10">
-      <Filter onStateChange={handleFilterChange} />
-      <div className="flex flex-wrap gap-6 justify-around">
+      <div className="flex justify-center fixed z-5 top-8 left-16 w-full">
+        <Filter onStateChange={handleFilterChange} />
+      </div>
+      <div className="flex flex-wrap gap-6 justify-around absolute top-28">
         {websiteData.map(
           (res, i) =>
             filter === res.tag && (
