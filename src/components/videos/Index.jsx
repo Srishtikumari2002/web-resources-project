@@ -1,34 +1,50 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Card from '../Card';
 import Filter from '../filter/index';
-import videoData from '../../database/videos.json';
+import html from '../../database/videos/html.json';
+import css from '../../database/videos/css.json';
+import js from '../../database/videos/javascript.json';
+import react from '../../database/videos/reactjs.json';
 
 const Index = () => {
   const [filter, setFilter] = useState('html');
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (filter === 'html') {
+      setData([...html]);
+    } else if (filter === 'css') {
+      setData([...css]);
+    } else if (filter === 'js') {
+      setData([...js]);
+    } else {
+      setData([...react]);
+    }
+  }, [filter]);
 
   const handleFilterChange = (target) => {
     setFilter(target);
   };
 
   return (
-    <div className="m-10">
-      <div className="flex justify-center fixed z-5 top-8 left-16 w-full">
+    <div className='m-10'>
+      <div className="absolute top-10 left-12 mx-10 w-full z-5 flex justify-center">
         <Filter onStateChange={handleFilterChange} />
       </div>
-      <div className="flex flex-wrap gap-6 justify-around absolute top-28 ">
-        {videoData.map(
-          (res, i) =>
-            filter === res.tag && (
-              <Card
-                className
-                key={i}
-                title={res.title}
-                link={res.link}
-                description={res.description}
-                i={i}
-                img={res.img}
-              />
-            )
+      <div className='flex flex-wrap gap-6 justify-around pt-24'>
+        {data.length > 0 ? (
+          data.map((res, i) => (
+            <Card
+              key={res.title}
+              title={res.title}
+              link={res.link}
+              description={res.description}
+              i={i}
+              img={res.img}
+            />
+          ))
+        ) : (
+          <p>No data found.</p>
         )}
       </div>
     </div>
